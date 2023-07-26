@@ -1,0 +1,281 @@
+Python Assignment - 9
+
+1. To what does a relative path refer?
+
+Sol: A relative path refers to the location of a file or directory in relation to the current working directory of the Python script or the current
+     module being executed. It is a way to specify the location of a file or directory without providing the full path starting from the root of 
+     the file system.
+
+  1. '.' - (dot): Represents the current directory.
+  2. '..' - (dot dot): Represents the parent directory.
+
+  Eg - import os
+       relative_path = "../data/data_file.txt"
+       full_path = os.path.abspath(relative_path)
+       print(full_path)
+
+2. 2. What does an absolute path start with your operating system?
+
+Sol: An absolute path starts with a root directory, which depends on the operating system you are using. The root directory is the topmost 
+     directory in the file system hierarchy.
+
+     Absolute paths on different operating systems:-
+
+  1. Windows:
+
+     An absolute path starts with a drive letter (e.g., "C:", "D:", etc.) followed by a backslash "".
+     Example: "C:\\Users\\Username\\Documents\\file.txt" or "D:\\my_folder\\myfile.txt"
+
+  2. Linux and macOS:
+
+    An absolute path starts with a forward slash "/".
+    Example: "/home/username/Documents/file.txt" or "/var/log/syslog"
+
+
+3. What do the functions os.getcwd() and os.chdir() do?
+
+Sol: 1. os.getcwd(): This function returns a string representing the current working directory. It does not take any arguments.
+        When we call os.getcwd(), it will provide the absolute path of the current working directory as a string.
+
+      Eg - import os
+           current_directory = os.getcwd()
+           print("Current working directory:", current_directory)
+
+    2. os.chdir(path): This function changes the current working directory to the specified path. 
+       The argument path is the new directory we want to set as the current working directory. 
+       It can be either an absolute path or a relative path.
+
+     Eg - import os
+       # Print the current working directory
+       print("Current working directory:", os.getcwd())
+      # Change the current working directory
+      new_directory = "/path/to/new_directory"
+      os.chdir(new_directory)
+      # Print the updated current working directory
+      print("Updated working directory:", os.getcwd())
+
+
+4. What are the . and .. folders?
+
+Sol: 1. . (dot): This refers to the current directory. It is used to represent the directory where the Python script or the current
+          module is being executed.
+
+     2. .. (dot dot): This refers to the parent directory. It is used to represent the directory one level above the current directory.
+
+   
+    Eg - import os
+       # Get the path to the data directory using the parent directory reference (..)
+       data_dir = os.path.join(os.path.dirname(__file__), "..", "data")
+       data_file_path = os.path.join(data_dir, "data_file.txt")
+       # Now you can use data_file_path to access the file
+
+5. In C:\bacon\eggs\spam.txt, which part is the dir name, and which part is the base name?
+
+Sol: In the path "C:\bacon\eggs\spam.txt", the dir name and the base name can be determined using Python's os.path module:-
+
+  1. Directory Name (dir name):
+     The directory name refers to the path of the directory that contains the file or the last component of the path. 
+     In this case, "C:\bacon\eggs" is the directory name.
+  
+  2.Base Name (base name):
+    The base name refers to the last part of the path, which is the actual filename. In this case, "spam.txt" is the base name.
+
+   Eg - import os
+        path = r"C:\bacon\eggs\spam.txt"
+       # Extract the directory name
+       directory_name = os.path.dirname(path)
+       print("Directory Name:", directory_name)
+      # Extract the base name (file name)
+      base_name = os.path.basename(path)
+      print("Base Name:", base_name)
+
+Output:- Directory Name: C:\bacon\eggs
+         Base Name: spam.txt
+
+
+6. What are the three “mode” arguments that can be passed to the open() function?
+
+Sol: The open() function is used to open a file and provides various modes to specify how the file should be opened. 
+     The mode argument is a string that determines the file's access mode and file handling behavior.
+
+    The three most common mode arguments are:-
+
+  1. 'r' (Read Mode):
+     This is the default mode for the open() function. It opens the file for reading. If the file does not exist, it raises a FileNotFoundError.
+     If the file   exists, it allows you to read its contents.
+
+ 2. 'w' (Write Mode):
+    This mode opens the file for writing. If the file exists, its contents will be truncated (emptied). 
+    If the file doesn't exist, a new file will be created. Be cautious, as using this mode will delete the existing content.
+
+3. 'a' (Append Mode):
+   This mode opens the file for writing as well but in append mode. If the file exists, new data will be appended at the end of the file. 
+   If the file doesn't exist, a new file will be created.
+
+ Eg - # Read Mode
+    with open("example.txt", "r") as file:
+    content = file.read()
+    print("Read Mode Content:", content)
+
+   # Write Mode
+    with open("example.txt", "w") as file:
+    file.write("This is a new content in write mode.")
+
+    # Append Mode
+    with open("example.txt", "a") as file:
+    file.write("\nThis is appended content in append mode.")
+
+
+7. What happens if an existing file is opened in write mode?
+
+Sol: If an existing file is opened in write mode ('w') in Python, the following will happen:-
+    
+    1. If the file exists:
+
+    The file's contents will be truncated (emptied), and the file will become empty.
+    The file pointer will be positioned at the beginning of the file, ready for writing.
+
+    2. If the file does not exist:
+
+    A new file with the specified name will be created.
+    The file will be opened in write mode as an empty file.
+    The file pointer will be positioned at the beginning of the file, ready for writing.
+
+   Eg - # Opening the file in write mode
+       with open("example.txt", "w") as file:
+       file.write("This is new content in write mode.")
+
+8. How do you tell the difference between read() and readlines()?
+
+Sol: The read() and readlines() are two different methods used to read data from a file.
+
+   1. read():
+     The read() method reads the entire content of the file as a single string and returns it.
+     If you don't specify any argument, it will read the entire file.
+     If you provide an argument size, it will read the first size bytes (or characters) from the file.
+     It is useful when you want to read the entire file's content and treat it as a single string.
+
+   Eg - with open("example.txt", "r") as file:
+        content = file.read()
+        print(content)
+
+
+   2. readlines():
+      The readlines() method reads the content of the file line by line and returns a list of lines.
+      Each line is represented as a string element in the list, and the newline character ('\n') at the end of each line is included in the strings.
+      It is useful when you want to process each line of the file separately.
+
+    Eg - with open("example.txt", "r") as file:
+         lines = file.readlines()
+         for line in lines:
+            print(line)
+
+
+9. What data structure does a shelf value resemble?
+
+Sol: A shelf value resembles a dictionary-like data structure. A shelf is a persistent, dictionary-like storage provided by the shelve module.
+     It allows you to store and retrieve key-value pairs persistently to a file on disk, making it suitable for long-term data storage.
+
+
+     Eg - import shelve
+
+       # Create or open a shelf file named "mydata"
+       with shelve.open("mydata") as shelf:
+       # Adding data to the shelf
+       shelf["name"] = "John"
+       shelf["age"] = 30
+       shelf["city"] = "New York"
+
+       # Reading data from the shelf
+       print("Name:", shelf["name"])
+       print("Age:", shelf["age"])
+       print("City:", shelf["city"])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
